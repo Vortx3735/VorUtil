@@ -1,0 +1,66 @@
+plugins {
+    id "java"
+    id "edu.wpi.first.GradleRIO" version "2019.3.2"
+    id "maven-publish"
+}
+
+version = "1.0.0"
+
+repositories {
+    jcenter()
+    mavenCentral ()
+    mavenLocal()
+}
+
+dependencies {
+    compileOnly wpi.deps.wpilib()
+    compileOnly wpi.deps.vendor.java()
+    compileOnly wpi.deps.vendor.jni(wpi.platforms.roborio)
+    compileOnly wpi.deps.vendor.jni(wpi.platforms.desktop)
+    testCompile 'junit:junit:4.12'
+    
+}
+
+jar {
+    from sourceSets.main.allSource
+    baseName = "vorutil"
+}
+
+task install (dependsOn: publishToMavenLocal) {
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId 'org.vortx3735'
+            artifactId 'vorutil'
+
+            from components.java
+        }
+    }
+}
+
+
+// publishing {
+//     publications {
+//         mavenJava(MavenPublication) {
+//             artifactId = "vorutil"
+//         }
+
+//         pom {
+//             name = 'VorTx 3735 Utility Library'
+//             description = 'A library of robot utility classes'
+//             url = 'https://github.com/orgs/Vortx3735'
+//             developers {
+//                 developer {
+//                     id = 'johnd'
+//                     name = 'John Doe'
+//                     email = 'john.doe@example.com'
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
