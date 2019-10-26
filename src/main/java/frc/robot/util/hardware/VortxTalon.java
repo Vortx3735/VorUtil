@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.settings.PIDSetting;
 
@@ -28,7 +29,9 @@ public class VortxTalon extends WPI_TalonSRX{
 		this.name = name;
 		this.setInverted((id < 0) ? true : false);
 	}
-	
+
+
+	//Array of VortxTalons with 1st ->.... follow 0th VortxTalon.
 	public VortxTalon(int[] ids, String name){
 		this(ids[0], name);
 		followers = new VortxTalon[ids.length - 1];
@@ -148,7 +151,11 @@ public class VortxTalon extends WPI_TalonSRX{
 	}
 	
 	public void log() {
+		if(this.getSelectedSensorPosition(0)>=0)
 		SmartDashboard.putNumber((name + " Inches"), this.getSelectedSensorPosition(0) * inchesPerTick);
+		else
+		SmartDashboard.putNumber((name + " Inches"), 0);
+
 
 	}
 	
